@@ -1,5 +1,5 @@
 module OptimalSpacecraftTrajectories
 
-# Write your package code here.
+include("partials.jl")
 
 end
