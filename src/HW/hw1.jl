@@ -53,7 +53,7 @@ end
 func(x) = cos(-x[1]*x[2]*x[3] + z^2)
 
 # ╔═╡ 47e75de7-43c8-4371-837a-dbeae42d01a1
-f′_actual - cplxDiff(func, [1.0, 2.0, 3.0], 1e-20)
+norm(f′_actual - cplxDiff(func, [1.0, 2.0, 3.0], 1e-20))
 
 # ╔═╡ 2a48744f-07b6-404c-ba86-bc83cf3a1d2a
 md"#### Part 3"
@@ -80,13 +80,13 @@ function cntrDiff(f, x₀, h, N)
 end
 
 # ╔═╡ c5738c89-eb71-4e9b-a055-3dd4cc59f2bf
-f′_actual - cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 3)
+md"$(cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 3))"
 
 # ╔═╡ fa1dc1f8-295e-4a3f-a933-1d992892251a
-f′_actual - cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 5)
+md"$(cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 5))"
 
 # ╔═╡ 94a78aaa-bc69-49de-8465-de6c469d6081
-f′_actual - cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 7)
+md"$(cntrDiff(func, [1.0, 2.0, 3.0], 1e-4, 7))"
 
 # ╔═╡ 7af0358e-cf95-43af-a5c5-6d1d93384b31
 md"#### Part 4"
