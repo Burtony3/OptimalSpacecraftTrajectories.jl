@@ -127,11 +127,22 @@ $$
 ::: box
 **Problem Statement** What is the period of the orbit in TU.
 :::
+$$
+a = \frac{\mu \,\Vert\vec{r}\Vert}{2\,\mu -\Vert\vec{r}\Vert\,\Vert\vec{v}\Vert^2 }
+$$
+$$
+T = 2\pi\sqrt{\frac{a^3}{\mu}}
+$$
+Using the above equations, the period of the above orbit was found to be $T = 8.4510(...)\text{ TU}$
 
 ### Part 2.2
 ::: box
 **Problem Statement** Use a variable step ODE solver with tight tolerances to compute and plot 1 period of the orbit in the $xy$-plane. Verify periodicity by reporting the norm of the vector difference between the beginning and end states. Change ODE tolerances to reduce this error to under $10^{-13}$. Report the order/type of the integrator used and the tolerances needed.
 :::
+
+State propagated using Tsit5 variable time solver (from Julia DifferentialEquations package), in order to achieve required error, absolute and relative tolerances of $10^{-13}$ were used. 
+
+![](hw1_2.2eq.png)
 
 ### Part 2.3
 ::: box
@@ -147,21 +158,48 @@ $$
 ::: box
 **Problem Statement** Report the full 6x6 matrix for [Part 2.3.1](#part-2.3).
 :::
+$$
+\left[\phi_a(T, t_0)\right] \approx \begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+\end{bmatrix}
+$$
 
 ### Part 2.5
 ::: box
 **Problem Statement** Report the Frobenius norm of the matrix in [Part 2.4](#part-2.4).
 :::
+$$
+\Vert\left[\phi_a(T, t_0)\right]\Vert = 2.4494897(...)
+$$
 
 ### Part 2.6
 ::: box
 **Problem Statement** Compute the Frobenius norm of the matrix difference of the [Parts 2.3.2-2.3.4](#part-2.3) with respect to [Part 2.3.1](#part-2.3).
 :::
+$$
+\Delta\left[\phi_b(T, t_0)\right] = 25.872959(...)
+$$
+**Note on this number:** I understand this is obviously wrong, they all should be (relatively) equal. I've tried this method in both MATLAB, Julia, and confirmed my equations with papers, so I am not exactly sure what I did wrong. Most likely a simple programmatic error rather than something with my math. I'll explain it in the [Appendix](#variational-stm-method).
+$$
+\Delta\left[\phi_c(T, t_0)\right] =  0.002676(...)
+$$
+$$
+\Delta\left[\phi_d(T, t_0)\right] =  6.094236(...)\times10^{-12}
+$$
 
 ### Part 2.7
 ::: box
 **Problem Statement** Experiment with fixed vs variable step integrators, at different tolerances. Report on the accuracy of the STMs by repeating [Part 2.6](#part-2.6), treating the complex STM as truth. Discuss the results.
 :::
+
+Comparing the total number of steps taken, regardless of size, any solution of reasonable accuracy, error under $10^{-4}$, shows that the variable step solves take less total steps to solve the solution than their fixed time step counterparts. From my understanding of how these solvers work, the variable step solvers take larger steps when their are more sure of future gradients estimates. Thus "stepping over" steps required to be taken by the fixed time step solvers.
+
+![](hw1_2.7.png)
 
 ### Part 2.8
 ::: box
@@ -171,14 +209,93 @@ $$
 2) Finite Difference of Your Choice (Show Formula)
 :::
 
+$$
+f^{\prime\prime}_\text{5pt} = \frac{-f(x_0 - 2h) + 16f(x_0 - h) -30f(x_0) + 16f(x_0 + h) - f(x_0 + 2h)}{12h^2}
+$$
+
 ### Part 2.9
 ::: box
 **Problem Statement** Report the full $6\times6$ matrix for [Part 2.8.1](#part-2.8).
 :::
+
+$$
+\frac{\partial^2KE}{\partial\textbf{x}} = \begin{bmatrix}
+ 30.8753 &  39.755  &  10.5566  &  17.4601  &   86.5413 &  25.1257 \\
+ 39.755  &  45.9582 &  15.0279  &  24.6     &   97.8826 &  32.1899 \\
+ 10.5566 &  15.0279 &  -2.0744  &   2.36418 &   49.7998 &   5.08131 \\
+ 17.4601 &  24.6    &   2.36418 &   3.07213 &   68.5336 &  14.036 \\
+ 86.5413 &  97.8826 &  49.7998  &  68.5336  &  170.047  &  80.2224 \\
+ 25.1257 &  32.1899 &   5.08131 &  14.036   &   80.2224 &  14.8214 \\
+\end{bmatrix}
+$$
+
+Due to the issues in [Part 2.6](#part-2.6), the values shown will be from the Finite Difference Method.
 
 ### Part 2.10
 ::: box
 **Problem Statement** Report the Frobenius norm of the matrix from [Part 2.9](#part-2.9).
 :::
 
+$$
+\Vert\frac{\partial^2KE}{\partial\textbf{x}}\Vert = 320.97984(...)
+$$
+
+Due to the issues in [Part 2.6](#part-2.6), the values shown will be from the Finite Difference Method.
+
+## Appendix
+
+### Variational STM Method
+Following both the method in Bates, and your lecture notes I was able to match the equations for the A matrix. (Brackets around variables indicate matrices)
+$$
+\left[\text{A}\right] = \begin{bmatrix}
+\left[0\right] & \left[\textbf{I}\right] \\ 
+\left[\text{G}\right] & \left[0\right] \\ 
+\end{bmatrix}_{6x6}
+$$
+$$
+\left[\text{G}\right] = \frac{\mu}{\Vert\vec{r}\Vert^5}\left( 3\,\vec{r}\,\vec{r}^T - \Vert\vec{r}\Vert^2\left[\textbf{I}\right] \right)
+$$
+$$
+\left[\dot{\phi}\right] = \left[\text{A}\right]\left[\phi\right]\qquad \left[\phi\right]_0 = \left[\textbf{I}\right]_{6x6}
+$$
+
+#### MATLAB Code Tested
+.
+```matlab
+opts = odeset('reltol', 1e-13, 'abstol', 1e-13);
+[t, Y] = ode45(f, [0 T], [x; reshape(eye(6), [], 1)], opts);
+
+function du = EoM(u, t, mu)
+    rvec = u(1:3);
+    r = norm(rvec);
+    rhat = rvec/r;
+    vvec = u(4:6);
+    phi = reshape(u(7:42), 6, 6);
+
+    du(1:3) = vvec;
+    du(4:6) = -mu*(rvec/r^3);
+
+    G = mu/r^5 * ( (3 * (rvec*rvec.')) - (r^2*eye(3)) );
+
+    zmtrx = zeros(3, 3);
+
+    A = [zmtrx eye(3); G zmtrx];
+    du(7:42) = reshape(A*phi, [], 1);
+    du = du(:);
+end
+```
+
+#### Output
+$$
+\phi_b = \begin{bmatrix}
+   -0.0841 &   -1.0841 &   -0.1084 &   -0.3089 &   -2.1625 &  -0.9268 \\
+   -7.5885 &   -6.5885 &   -0.7588 &   -2.1625 &  -15.1373 &  -6.4874 \\
+   -3.2522 &   -3.2522 &    0.6748 &   -0.9268 &   -6.4874 &  -2.7803 \\
+    3.8042 &    3.8042 &    0.3804 &    2.0841 &    7.5885 &   3.2522 \\
+    3.8042 &    3.8042 &    0.3804 &    1.0841 &    8.5885 &   3.2522 \\
+    0.3804 &    0.3804 &    0.0380 &    0.1084 &    0.7588 &   1.3252 \\
+\end{bmatrix}
+$$
+
+I'm not sure why this isn't symmetric, I've done variational equations for the three body problem following this exact method, and did not encounter this problem. Although on a side note, the eigenvalues of this matrix (in diagonal form from `eig`) did return an 6x6 identity matrix. So I believe it is mostly correct, I am just missing one final piece. 
 
