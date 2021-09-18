@@ -209,8 +209,8 @@ begin
 	Φc = genSTM((f, x, h) -> cntrDiff(f, x, h, 3), EoM_shrthnd2, x₀, sol[end], 1e-13)
 	
 	# 5 POINT FINITE DIFFERENCE
-	Φd = genSTM((f, x, h) -> cntrDiff(f, x, h, 5), EoM_shrthnd2, x₀, sol[end], 1e-4)
-	md"Calculating STMs || $(Φb)"
+	Φd = genSTM((f, x, h) -> cntrDiff(f, x, h, 5), EoM_shrthnd2, x₀, sol[end], 1e-13)
+	md"Calculating STMs"
 end
 
 # ╔═╡ 7b270ce3-a920-4f24-ba7d-7c3a49fdf1f1
@@ -297,6 +297,9 @@ function cntrDiff′(f, x₀, h)
 	return f″
 end; md"$f^{\prime\prime}  = -\frac{f_{-2} - 16f_{-1} + 30f_{0} - 16f_{1} + f_{2}}{-12h^2}$"
 
+# ╔═╡ 44689378-b8a1-44ba-b07a-fc9f8bd3e13a
+md"#### Part 9"
+
 # ╔═╡ 55cec908-d668-4e68-b972-c0e249a45a89
 function KE(u, μ, T, idx)
 	sol = solve(ODEProblem(EoM!, u, (0.0, T), (μ)), reltol=1e-13, abstol=1e-13)
@@ -321,7 +324,7 @@ begin
 end
 
 # ╔═╡ 4f254ffc-eab3-4bbe-99e9-0acea606ef86
-md"#### Part 9"
+md"#### Part 10"
 
 # ╔═╡ 9216e0a5-3521-4439-8b17-2808e717926b
 norm(∂²xₜ)
@@ -1885,6 +1888,7 @@ version = "0.9.1+5"
 # ╠═e0efbfab-3439-46b1-b4f8-d8429945ca95
 # ╟─323e5f7f-580d-48e0-ae11-7543f4b7c2f2
 # ╠═6346f685-5403-4835-b6d7-ae4cf6ed8213
+# ╟─44689378-b8a1-44ba-b07a-fc9f8bd3e13a
 # ╠═55cec908-d668-4e68-b972-c0e249a45a89
 # ╠═454e5ca1-df91-4a40-81c1-651b4b369dac
 # ╠═4a89c58d-02d0-4e9b-a333-09a6786a61fc

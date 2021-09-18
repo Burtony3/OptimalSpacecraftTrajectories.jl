@@ -6,7 +6,11 @@ subject: "ASE387P Optimal Spacecraft Trajectories"
 keywords: [ASE387P, UT Austin, Trajectories, Julia]
 subtitle: "Homework 1"
 lang: "en"
-titlepage: true
+titlepage: false
+header-left: "ASE387P"
+header-center: "Burton Yale"
+header-right: "2021-09-17"
+footer-left: "Homework 1"
 colorlinks: true
 header-includes:
 - |
@@ -104,6 +108,8 @@ Evaluating the equation for $\textbf{x} = [1, 2, 3]^T$ yields this analytical de
 
 By substituting $P_{x_1}$ into the complex derivative formula for $f$ gives us a numerical solution: $P_{x_1x_1} = 30.206575046752285$ with an error of $3.552713678800501e-15$ for an $h = 10^{-20}$.
 
+\newpage
+
 ## Problem 2
 ::: box
 **Problem Statement** Consider the following initial conditions for a two-body orbit. $\mu$ is the standard gravitational parameter. Units are generic length and time units (LU and TU).
@@ -184,12 +190,12 @@ $$
 $$
 \Delta\left[\phi_b(T, t_0)\right] = 25.872959(...)
 $$
-**Note on this number:** I understand this is obviously wrong, they all should be (relatively) equal. I've tried this method in both MATLAB, Julia, and confirmed my equations with papers, so I am not exactly sure what I did wrong. Most likely a simple programmatic error rather than something with my math. I'll explain it in the [Appendix](#variational-stm-method).
+**Note on this number:** I understand this is obviously wrong, they all should be (relatively) equal. I've tried this method in both MATLAB, Julia, and confirmed my equations with papers, so I am not exactly sure what I did wrong. Most likely a simple programmatic error rather than something with my math. I'll explain it in the [Appendix](#variational-equations-stm-method).
 $$
 \Delta\left[\phi_c(T, t_0)\right] =  0.002676(...)
 $$
 $$
-\Delta\left[\phi_d(T, t_0)\right] =  6.094236(...)\times10^{-12}
+\Delta\left[\phi_d(T, t_0)\right] =  0.003485(...)
 $$
 
 ### Part 2.7
@@ -242,9 +248,11 @@ $$
 
 Due to the issues in [Part 2.6](#part-2.6), the values shown will be from the Finite Difference Method.
 
+\newpage
+
 ## Appendix
 
-### Variational STM Method
+### Variational Equations STM Method
 Following both the method in Bates, and your lecture notes I was able to match the equations for the A matrix. (Brackets around variables indicate matrices)
 $$
 \left[\text{A}\right] = \begin{bmatrix}
@@ -299,3 +307,5 @@ $$
 
 I'm not sure why this isn't symmetric, I've done variational equations for the three body problem following this exact method, and did not encounter this problem. Although on a side note, the eigenvalues of this matrix (in diagonal form from `eig`) did return an 6x6 identity matrix. So I believe it is mostly correct, I am just missing one final piece. 
 
+### Julia Notebook Code
+(Next Page)
