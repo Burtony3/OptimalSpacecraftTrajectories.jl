@@ -1,0 +1,76 @@
+####################################### ASSIGNMENT #######################################
+
+------------------ HEADER ------------------
+
+---
+title: "$CLASS"
+author: [Burton Yale]
+date: "$DATE"
+subject: "$SUBJECT"
+keywords: [ASE387P, UT Austin, Trajectories, Julia]
+subtitle: "$ASSIGNMENT"
+lang: "en"
+titlepage: false
+header-left: "$CLASS"
+header-center: "$NAME"
+header-right: "$DATE"
+footer-left: "$ASSIGNMENT"
+colorlinks: true
+header-includes:
+- |
+  ```{=latex}
+  \usepackage{tcolorbox}
+
+  \newtcolorbox{info-box}{colback=cyan!5!white,arc=0pt,outer arc=0pt,colframe=cyan!60!black}
+  \newtcolorbox{warning-box}{colback=orange!5!white,arc=0pt,outer arc=0pt,colframe=orange!80!black}
+  \newtcolorbox{error-box}{colback=red!5!white,arc=0pt,outer arc=0pt,colframe=red!75!black}
+  ```
+pandoc-latex-environment:
+  tcolorbox: [box]
+  info-box: [info]
+  warning-box: [warning]
+  error-box: [error]
+...
+
+------------------ PANDOC CALL ------------------
+pandoc "filename.md" -o "filename.pdf" --from markdown --template "eisvogel.latex" --filter pandoc-latex-environment --listings
+
+
+######################################### GENERAL #########################################
+
+------------------ HEADER ------------------
+
+---
+title: "$CLASS"
+author: [Burton Yale]
+date: "$DATE"
+subject: "$SUBJECT"
+keywords: [ASE387P, UT Austin, Trajectories, Julia]
+subtitle: "$ASSIGNMENT"
+lang: "en"
+titlepage: false
+header-left: "$CLASS"
+header-center: "$NAME"
+header-right: "$DATE"
+footer-left: "$ASSIGNMENT"
+colorlinks: true
+header-includes:
+- |
+  ```{=latex}
+  \usepackage{tcolorbox}
+
+  \newtcolorbox{info-box}{colback=cyan!5!white,arc=0pt,outer arc=0pt,colframe=cyan!60!black}
+  \newtcolorbox{warning-box}{colback=orange!5!white,arc=0pt,outer arc=0pt,colframe=orange!80!black}
+  \newtcolorbox{error-box}{colback=red!5!white,arc=0pt,outer arc=0pt,colframe=red!75!black}
+  ```
+pandoc-latex-environment:
+  tcolorbox: [box]
+  info-box: [info]
+  warning-box: [warning]
+  error-box: [error]
+...
+
+------------------ PANDOC CALL ------------------
+pandoc "filename.md" -o "filename.pdf" --from markdown --template "eisvogel.latex" --filter pandoc-latex-environment --listings
+
+

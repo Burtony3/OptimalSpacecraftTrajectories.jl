@@ -6,11 +6,8 @@ subject: "ASE387P Optimal Spacecraft Trajectories"
 keywords: [ASE387P, UT Austin, Trajectories, Julia]
 subtitle: "Homework 1"
 lang: "en"
-titlepage: false
-header-left: "ASE387P"
-header-center: "Burton Yale"
-header-right: "2021-09-17"
-footer-left: "Homework 1"
+titlepage: true
+toc-own-page: true
 colorlinks: true
 header-includes:
 - |
@@ -107,8 +104,6 @@ Evaluating the equation for $\textbf{x} = [1, 2, 3]^T$ yields this analytical de
 :::
 
 By substituting $P_{x_1}$ into the complex derivative formula for $f$ gives us a numerical solution: $P_{x_1x_1} = 30.206575046752285$ with an error of $3.552713678800501e-15$ for an $h = 10^{-20}$.
-
-\newpage
 
 ## Problem 2
 ::: box
