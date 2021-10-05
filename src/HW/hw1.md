@@ -137,6 +137,7 @@ $$
 Using the above equations, the period of the above orbit was found to be $T = 8.4510(...)\text{ TU}$
 
 ### Part 2.2
+
 ::: box
 **Problem Statement** Use a variable step ODE solver with tight tolerances to compute and plot 1 period of the orbit in the $xy$-plane. Verify periodicity by reporting the norm of the vector difference between the beginning and end states. Change ODE tolerances to reduce this error to under $10^{-13}$. Report the order/type of the integrator used and the tolerances needed.
 :::

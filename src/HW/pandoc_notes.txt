@@ -33,7 +33,7 @@ pandoc-latex-environment:
 ...
 
 ------------------ PANDOC CALL ------------------
-pandoc "filename.md" -o "filename.pdf" --from markdown --template "eisvogel.latex" --filter pandoc-latex-environment --listings
+pandoc "filename.md" -o "filename.pdf" --from markdown --template "eisvogel.latex" --filter pandoc-latex-environment --listings --toc
 
 
 ######################################### GENERAL #########################################

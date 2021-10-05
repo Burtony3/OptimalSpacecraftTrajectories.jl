@@ -1,5 +1,5 @@
 module OptimalSpacecraftTrajectories
 
-include("Optimization/partials.jl")
+include("./Derivatives.jl")
 
 end
