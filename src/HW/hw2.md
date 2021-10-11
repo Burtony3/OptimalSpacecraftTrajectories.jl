@@ -6,7 +6,11 @@ subject: "ASE387P Optimal Spacecraft Trajectories"
 keywords: [ASE387P, UT Austin, Trajectories, Julia]
 subtitle: "Homework 2"
 lang: "en"
-titlepage: true
+titlepage: false
+header-left: "ASE387P"
+header-center: "Burton Yale"
+header-right: "2021-10-04"
+footer-left: "Homework 2"
 toc-own-page: true
 colorlinks: true
 header-includes:
@@ -46,7 +50,7 @@ $$
 **Problem Statement** Root solve the equation for $z$, using any method starting with a guess of $z=0$. What is the root to 16 digits?
 :::
 
-Using the Julia root solving package, `Roots.jl`, $F(z) = 0$ at the value of $z = 1.543295599106779$.
+Using the Julia root solving package, `Roots.jl`, $F(z) = 0$ at the value of $\fbox{z = 1.543295599106779}$.
 
 ### Part 1.3
 ::: box
@@ -146,7 +150,10 @@ x_2 \,x_3 \,\sigma_2 -\frac{2\,z\,\sigma_2 \,{\left(\sigma_3 -2\,x_3 \,z\,\cos \
 \end{array}
 $$
 
-Evaluating at $z^\star$, the resulting gradient is $\frac{dP}{d\textbf{x}} = \left[0.5771,\, 0.5118,\, 0.0530\right]^T$. Error between analytical and complex methods comes out to $\varepsilon  = \left[-0.4441,\, 0,\, -0.2220\right]^T \times 10^{-15}$
+Evaluating at $z^\star$, the resulting gradient is $\frac{dP}{d\textbf{x}} = \left[0.5771,\, 0.5118,\, 0.0530\right]^T$. Error between analytical and complex methods comes out to:
+$$
+\varepsilon  = [-0.4441,\, 0,\, -0.2220]^T \times 10^{-15}
+$$
 
 ### Part 2.3
 ::: box
@@ -163,7 +170,7 @@ $$
 
 ### Part 2.4
 ::: box
-**Problem Statement** Using the analytical method, compute the second total derivative of $P$ with respect to $\textbf{x}$. Describe the approach. Compare answer to [Part 2.3](#part-2.3).
+**Problem Statement** Using the analytical method, compute the second total derivative of $P$ with respect to $\textbf{x}$. Describe the approach. Compare answer to [Part 2.3](#part-2.3). Also report the Frobenius norm.
 :::
 
 Once again using MATLAB to calculate intermediate partials $F_{\textbf{xx}}$, $F_{\textbf{x}z}$, $F_{zz}$, and $F_{z\textbf{x}}$, as well as $P_{\textbf{xx}}$, $P_{\textbf{x}z}$, $P_{zz}$, and $P_{z\textbf{x}}$. The second total derivative of $z$ with respect to $\textbf{x}$ was then calculated using the above terms:
@@ -187,6 +194,8 @@ $$
 $$
 
 These are different from the values found by the complex step. After some experimentation, the values of each method \textbf{do} match up where $z=0$. This leads me to believe my second parital derivatives with respect to $z$ are incorrect, most likely due to linear algebra operations or typos. See [Appendix B](#appendix-b-second-total-derivative-values) for those values.
+
+Consequently, both matrix norms came out to different values. The complex step method reported a Frobenius norm of $\fbox{16.4261}$, while the analytical method reported a norm of $\fbox{25.5999}$.
 
 \newpage
 
@@ -221,7 +230,7 @@ These are different from the values found by the complex step. After some experi
 
 **Part 3.1.4:** State the value of J
 
-When evaluating the performance index $J$ for this trajectory, found the value of $11.5459$ with an $\vec{r}_f = [0,\, 0,\, 0]$.
+When evaluating the performance index $J$ for this trajectory, found the value of $\fbox{11.5459}$ with an $\vec{r}_f = [0,\, 0,\, 0]$.
 
 ### Part 3.2
 ::: box
