@@ -151,6 +151,22 @@ Also build a full second order Levenberg-Marquardt solver with dynamic adjustmen
 **Problem Statement** For each of the 5 methods, minimize the Rosenbrock function starting at $\textbf{x} = [4,\, -1]$. Plot the $\textbf{x}$ at each major iteration. Tune your codes and try to reduce the number of function calls to a minimum. State success or failure (using a maximum iteration limit of $1000$), the final $\textbf{x}$ and $f$ to 8 digits, and the total number of function calls and derivative function calls (first and second order), also the CPU time required, and machine you are using. Discuss the results and your general strategy. Present a summary table with rows of each method and columns for the characteristics of each method mentioned above.
 :::
 
+| Algorithm | $F_{min}$ | Func Calls | Grad Calls | Hess Calls | Run Time (seconds) |
+| :---: | --- | --- | --- | --- | --- |
+| Steepest Descent | $0.17807939$ | $40863$ | $1001$ | $0$ | $0.279271$ |
+| Fletcher Reeves | $1\times10^{-8}$ | $3766$ | $93$ | $0$ | $0.079834$ |
+| Polak Ribiere | $0$ | $3571$ | $88$ | $0$ | $0.071204$ |
+| BFGS | $0$ | $635$ | $16$ | $0$ | $0.066949$ |
+| Levenberg Marquardt |  |  |  |  |  |
+
+![Finding minimum of Rosenbrock function using Steepest Descent. Solution fails after iteration budget is reached.](hw3p3SD.png){width=65%}
+
+![Finding minimum of Rosenbrock function using Fletcher-Reeves algorithm. Minimum successfully found within bounds of problem.](hw3p3FR.png){width=65%}
+
+![Finding minimum of Rosenbrock function using Polak-Ribiere algorithm. Minimum successfully found within bounds of problem.](hw3p3PR.png){width=65%}
+
+![Finding minimum of Rosenbrock function using BFGS algorithm. Minimum successfully found within bounds of problem.](hw3p3BFGS.png){width=65%}
+
 ### Part 3.2
 ::: box
 **Problem Statement** Repeat [Part 3.1](#part-3.1) but instead minimize the function below with the two initial conditions: $\textbf{x} = [4,\, -1]$ and $\textbf{x} = [2,\, 3]$.
