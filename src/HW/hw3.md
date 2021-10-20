@@ -177,3 +177,116 @@ $$ f = e^{u^2} + \sin(4x_1 - 3x_2)^4 + 0.5(2x_1 + x_2 -10)^2 $$
 where
 $$u = \frac{1}{2}(x_1^2 + x_2^2 + 25)$$
 :::
+
+## Problem 4: Orbits Problem
+::: box
+**Problem Statement** Find the initial velocity that solves the planar $J_2$-Lambert problem described below:
+
+\underline{Input Constants}:
+$$
+J_2 = 0.1 \quad R = 0.9 \quad \mu = 1 \quad \text{TOF} = 83
+$$
+$$
+\textbf{r}_f = \begin{bmatrix}
+-2.891216226058043 \\
+-1.254145998446107 \\
+0
+\end{bmatrix}
+$$
+
+\underline{Performance Index}:
+$$
+f = (\textbf{r}_\ast - \textbf{r}_f)^T(\textbf{r}_\ast - \textbf{r}_f) + 10^{10}(N - N_\ast)
+$$
+Where $N_\ast$ and $\textbf{r}_\ast$ are the number of revolutions and final position of the propagated orbit, respectively.
+
+\underline{Equations of Motion}:
+$$
+\ddot{\textbf{r}} = \nabla U = \left[ \frac{dU}{dx},\, \frac{dU}{dy},\, \frac{dU}{dz}\right ]
+$$
+$$
+U = \frac{\mu}{\sqrt{x^2 + y^2 + z^2}}\left[ 1 - \frac{R^2}{x^2 + y^2 + z^2}J_2\left( \frac{3z^2}{2(x^2 + y^2 + z^2)} - \frac{1}{2} \right) \right]
+$$
+
+\underline{Initial Guesses}:
+$$
+\textbf{r}_0 = \begin{bmatrix}
+1 \\ 0 \\ 0
+\end{bmatrix} \quad
+\textbf{v}_0 = \begin{bmatrix}
+0.05 \\ 1.305 \\ 0
+\end{bmatrix} \quad \textbf{or} \quad
+\textbf{v}_0 = \begin{bmatrix}
+-0.2 \\ 1.27 \\ 0
+\end{bmatrix} \quad
+$$
+
+
+Show the solution space, and path for any method implemented successfully. Discuss the method used for computing derivatives, and solving the equations of motion. Discuss the approach including any failed or stalled efforts and generally discuss results of success. Plot the initial condition of the trajectory, the targeted position, and the propagated solution.
+:::
+
+#### Equations of Motion
+
+For computing the equations of motion, the equations were symbolically solved using MATLAB's symbolic toolbox. Starting with the original $U$ equation, the derivatives were first taken with respect to $x$ and $y$ as their equations will yield very similar answers where only the numerators have their $x$ terms swapped with $y$ terms. Since $z$ requires an additional quotient rule it will yield different results. All equations are shown below:
+
+$$
+\LARGE\begin{array}{l}
+\frac{dU}{dx} = \frac{\frac{2\,J_2 \,R^2 \,x\,\sigma_2 }{{\sigma_1 }^2 }+\frac{12\,J_2 \,R^2 \,x\,z^2 }{{{\left(2\,x^2 +2\,y^2 +2\,z^2 \right)}}^2 \,\sigma_1 }}{\sqrt{\sigma_1 }}+\frac{x\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }\\
+\frac{dU}{dy} = \frac{\frac{2\,J_2 \,R^2 \,y\,\sigma_2 }{{\sigma_1 }^2 }+\frac{12\,J_2 \,R^2 \,y\,z^2 }{{{\left(2\,x^2 +2\,y^2 +2\,z^2 \right)}}^2 \,\sigma_1 }}{\sqrt{\sigma_1 }}+\frac{y\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }\\
+\frac{dU}{dz} = \frac{z\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }-\frac{\frac{J_2 \,R^2 \,{\left(\frac{6\,z}{\sigma_3 }-\frac{12\,z^3 }{{\sigma_3 }^2 }\right)}}{\sigma_1 }-\frac{2\,J_2 \,R^2 \,z\,\sigma_2 }{{\sigma_1 }^2 }}{\sqrt{\sigma_1 }}
+\mathrm{}\\
+\textrm{where}\\
+\;\;\sigma_1 =x^2 +y^2 +z^2 \\
+\;\;\sigma_2 =\frac{3\,z^2 }{\sigma_3 }-\frac{1}{2}\\
+\;\;\sigma_3 =2*x^2 + 2*y^2 + 2*z^2
+\end{array}
+$$
+
+#### Derivatives
+
+To calculate the derivatives of the performance index, the integration of the trajectory is passed through a complex step derivative function. This incurs 3 additional functions for each gradient computed when minizing. 
+
+#### Minimization Methods
+
+Searching the space and descending to the minima was left to the BFGS (Broyden-Fletcher-Goldfarb-Shanno Algorithm) to approximate the Hessian without requiring finite differencing the complex step method used previously. After using BFGS to find the direction of travel, a line search is conducted and the Golden Ratio method was used to minimize the line search. The number of iterations to find the solution showed high sensitivity to the initial stride length, $t_0$, which had to be tweaks from the value used earlier in the problem set. 
+
+| $t_0$ | $f$ Calls | $g$ Calls | Run Time (sec) |
+| :---: | --- | ---| --- |
+| $0.1$ |  |  |  |
+| $0.05$ |  |  |  |
+| $0.01$ |  |  |  |
+| $0.005$ |  |  |  |
+
+### Part 4.1
+::: box
+**Problem Statement** Solving the trajectory using the first initial condition for velocity:
+
+$$
+\textbf{v}_0 = \begin{bmatrix}
+0.05 \\ 1.305 \\ 0
+\end{bmatrix} 
+$$
+:::
+
+![](hw3p4_1_Initial.png)
+
+![](hw3p4_1_MinSearch.png)
+
+![](hw3p4_1_Optimal.png)
+
+### Part 4.2
+::: box
+**Problem Statement** Solving the trajectory using the second initial condition for velocity:
+
+$$
+\textbf{v}_0 = \begin{bmatrix}
+-0.2 \\ 1.27 \\ 0
+\end{bmatrix} \quad
+$$
+:::
+
+![](hw3p4_2_Initial.png)
+
+![](hw3p4_2_MinSearch.png)
+
+![](hw3p4_2_Optimal.png)
