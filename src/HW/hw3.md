@@ -157,7 +157,7 @@ Also build a full second order Levenberg-Marquardt solver with dynamic adjustmen
 | Fletcher Reeves | $1\times10^{-8}$ | $3766$ | $93$ | $0$ | $0.079834$ |
 | Polak Ribiere | $0$ | $3571$ | $88$ | $0$ | $0.071204$ |
 | BFGS | $0$ | $635$ | $16$ | $0$ | $0.066949$ |
-| Levenberg Marquardt |  |  |  |  |  |
+| Levenberg Marquardt | $0$ | $21$ | $15$ | $15$ | $0.031304$ |
 
 ![Finding minimum of Rosenbrock function using Steepest Descent. Solution fails after iteration budget is reached.](hw3p3SD.png){width=65%}
 
@@ -166,6 +166,8 @@ Also build a full second order Levenberg-Marquardt solver with dynamic adjustmen
 ![Finding minimum of Rosenbrock function using Polak-Ribiere algorithm. Minimum successfully found within bounds of problem.](hw3p3PR.png){width=65%}
 
 ![Finding minimum of Rosenbrock function using BFGS algorithm. Minimum successfully found within bounds of problem.](hw3p3BFGS.png){width=65%}
+
+![Finding minimum of Rosenbrock function using Levenberg-Marquart algorithm. Minimum successfully found within bounds of problem.](hw3p3LM.png)
 
 ### Part 3.2
 ::: box
