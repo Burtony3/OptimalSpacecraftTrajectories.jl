@@ -178,6 +178,8 @@ where
 $$u = \frac{1}{2}(x_1^2 + x_2^2 + 25)$$
 :::
 
+\newpage
+
 ## Problem 4: Orbits Problem
 ::: box
 **Problem Statement** Find the initial velocity that solves the planar $J_2$-Lambert problem described below:
@@ -230,7 +232,7 @@ Show the solution space, and path for any method implemented successfully. Discu
 For computing the equations of motion, the equations were symbolically solved using MATLAB's symbolic toolbox. Starting with the original $U$ equation, the derivatives were first taken with respect to $x$ and $y$ as their equations will yield very similar answers where only the numerators have their $x$ terms swapped with $y$ terms. Since $z$ requires an additional quotient rule it will yield different results. All equations are shown below:
 
 $$
-\LARGE\begin{array}{l}
+\Large\begin{array}{l}
 \frac{dU}{dx} = \frac{\frac{2\,J_2 \,R^2 \,x\,\sigma_2 }{{\sigma_1 }^2 }+\frac{12\,J_2 \,R^2 \,x\,z^2 }{{{\left(2\,x^2 +2\,y^2 +2\,z^2 \right)}}^2 \,\sigma_1 }}{\sqrt{\sigma_1 }}+\frac{x\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }\\
 \frac{dU}{dy} = \frac{\frac{2\,J_2 \,R^2 \,y\,\sigma_2 }{{\sigma_1 }^2 }+\frac{12\,J_2 \,R^2 \,y\,z^2 }{{{\left(2\,x^2 +2\,y^2 +2\,z^2 \right)}}^2 \,\sigma_1 }}{\sqrt{\sigma_1 }}+\frac{y\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }\\
 \frac{dU}{dz} = \frac{z\,{\left(\frac{J_2 \,R^2 \,\sigma_2 }{\sigma_1 }-1\right)}}{{\sigma_1 }^{3/2} }-\frac{\frac{J_2 \,R^2 \,{\left(\frac{6\,z}{\sigma_3 }-\frac{12\,z^3 }{{\sigma_3 }^2 }\right)}}{\sigma_1 }-\frac{2\,J_2 \,R^2 \,z\,\sigma_2 }{{\sigma_1 }^2 }}{\sqrt{\sigma_1 }}
@@ -238,7 +240,7 @@ $$
 \textrm{where}\\
 \;\;\sigma_1 =x^2 +y^2 +z^2 \\
 \;\;\sigma_2 =\frac{3\,z^2 }{\sigma_3 }-\frac{1}{2}\\
-\;\;\sigma_3 =2*x^2 + 2*y^2 + 2*z^2
+\;\;\sigma_3 =2x^2 + 2y^2 + 2z^2
 \end{array}
 $$
 
@@ -248,14 +250,14 @@ To calculate the derivatives of the performance index, the integration of the tr
 
 #### Minimization Methods
 
-Searching the space and descending to the minima was left to the BFGS (Broyden-Fletcher-Goldfarb-Shanno Algorithm) to approximate the Hessian without requiring finite differencing the complex step method used previously. After using BFGS to find the direction of travel, a line search is conducted and the Golden Ratio method was used to minimize the line search. The number of iterations to find the solution showed high sensitivity to the initial stride length, $t_0$, which had to be tweaks from the value used earlier in the problem set. 
+Searching the space and descending to the minima was left to the BFGS (Broyden-Fletcher-Goldfarb-Shanno Algorithm) to approximate the Hessian without requiring finite differencing the complex step method used previously. After using BFGS to find the direction of travel, a line search is conducted and the Golden Ratio method was used to minimize the line search. The number of iterations to find the solution showed high sensitivity to the initial stride length, $t_0$, which had to be tweaks from the value used earlier in the problem set. Associated plots available in [Appendix](#Problem-4-Stride-Length-Variation). Among all tested values, $t_0 = 0.01$ yielded the fastest results with fewest iterations.
 
 | $t_0$ | $f$ Calls | $g$ Calls | Run Time (sec) |
 | :---: | --- | ---| --- |
-| $0.1$ |  |  |  |
-| $0.05$ |  |  |  |
-| $0.01$ |  |  |  |
-| $0.005$ |  |  |  |
+| $0.1$ | $736$ | $21$ | $5.1968$ |
+| $0.05$ | $254$ | $8$ | $1.8634$ |
+| $0.01$ | $229$ | $8$ | $1.8084$ |
+| $0.005$ | $219$ | $8$ | $1.8685$ |
 
 ### Part 4.1
 ::: box
@@ -268,11 +270,11 @@ $$
 $$
 :::
 
-![](hw3p4_1_Initial.png)
+![Initial state propagated for first $\textbf{v}_0$ condition](hw3p4_1_Initial.png){width=100%}
 
-![](hw3p4_1_MinSearch.png)
+![Finding minimum using BFGS algorithm with initial stride optimized for quick convergence. Red region indicates where propagated trajectory no longer has three revolutions.](hw3p4_1_MinSearch.png){width=70%}
 
-![](hw3p4_1_Optimal.png)
+![Optimized trajectory propagated terminating at targeted final state.](hw3p4_1_Optimal.png){width=70%}
 
 ### Part 4.2
 ::: box
@@ -284,9 +286,23 @@ $$
 \end{bmatrix} \quad
 $$
 :::
+     
+![Initial state propagated for second $\textbf{v}_0$ condition](hw3p4_2_Initial.png){width=100%}
 
-![](hw3p4_2_Initial.png)
+![Finding minimum using BFGS algorithm with initial stride optimized for quick convergence. Takes more iterations due to initial distance from minimum. Red region indicates where propagated trajectory no longer has three revolutions.](hw3p4_2_MinSearch.png){width=70%}
 
-![](hw3p4_2_MinSearch.png)
+![Optimized trajectory propagated terminating at targeted final state.](hw3p4_2_Optimal.png){width=70%}
 
-![](hw3p4_2_Optimal.png)
+\newpage
+
+## Appendix
+
+### Problem 4 Stride Length Variation
+
+![](hw3p4_1_MinSearch_t00.100.png){width=100%}
+
+![](hw3p4_1_MinSearch_t00.050.png){width=80%}
+
+![](hw3p4_1_MinSearch_t00.010.png){width=80%}
+
+![](hw3p4_1_MinSearch_t00.005.png){width=80%}
