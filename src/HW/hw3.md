@@ -51,7 +51,7 @@ $$
 **Problem Statement** Visually, where is the global minimum?
 :::
 
-Looking specifically at the density of the countour lines, indicates a region around $[1 1]$ being the minimum. 
+Looking specifically at the density of the countour lines, indicates a region around $[1,\, 1]$ being the minimum. 
 
 ### Part 1.3
 ::: box
@@ -159,15 +159,15 @@ Also build a full second order Levenberg-Marquardt solver with dynamic adjustmen
 | BFGS | $0$ | $635$ | $16$ | $0$ | $0.066949$ |
 | Levenberg Marquardt | $0$ | $21$ | $15$ | $15$ | $0.031304$ |
 
-![Finding minimum of Rosenbrock function using Steepest Descent. Solution fails after iteration budget is reached.](hw3p3SD.png){width=65%}
+![Finding minimum of Rosenbrock function using **Steepest Descent**. Solution fails after iteration budget is reached.](hw3p3SD.png){width=65%}
 
-![Finding minimum of Rosenbrock function using Fletcher-Reeves algorithm. Minimum successfully found within bounds of problem.](hw3p3FR.png){width=65%}
+![Finding minimum of Rosenbrock function using **Fletcher-Reeves** algorithm. Minimum successfully found within bounds of problem.](hw3p3FR.png){width=65%}
 
-![Finding minimum of Rosenbrock function using Polak-Ribiere algorithm. Minimum successfully found within bounds of problem.](hw3p3PR.png){width=65%}
+![Finding minimum of Rosenbrock function using **Polak-Ribiere** algorithm. Minimum successfully found within bounds of problem.](hw3p3PR.png){width=65%}
 
-![Finding minimum of Rosenbrock function using BFGS algorithm. Minimum successfully found within bounds of problem.](hw3p3BFGS.png){width=65%}
+![Finding minimum of Rosenbrock function using **BFGS** algorithm. Minimum successfully found within bounds of problem.](hw3p3BFGS.png){width=65%}
 
-![Finding minimum of Rosenbrock function using Levenberg-Marquart algorithm. Minimum successfully found within bounds of problem.](hw3p3LM.png)
+![Finding minimum of Rosenbrock function using **Levenberg-Marquart** algorithm. Minimum successfully found within bounds of problem.](hw3p3LM.png)
 
 ### Part 3.2
 ::: box
@@ -293,16 +293,25 @@ $$
 
 ![Optimized trajectory propagated terminating at targeted final state.](hw3p4_2_Optimal.png){width=70%}
 
+### Discussion of Results
+For both initial condition cases, the final state was correctly optimized to. In this case, the method of minimization was the BFGS algorithm. This choice was motivated by the fact that the derivatives of the cost function were found through complex step derivatives, which requires two propagation call for every gradient found. Also tested was variation of the initial stride length during the line search. Starting with the $t_0$ from the previous problems, $0.1$, Figure \ref{fig:t0_0.1} shows the path taken to find the minimum. This initial stride length was large enough to jump completely over the band of solutions where the number of revolutions, $N$, was $3$. From there, it proceeded to find the solution, taking a much longer than average route. The next figures in the appendix show the increasingly smaller values of the initial stride. 
+
 \newpage
 
 ## Appendix
 
 ### Problem 4 Stride Length Variation
 
-![](hw3p4_1_MinSearch_t00.100.png){width=100%}
+![Finding minimum using BFGS algorithm with a variable initial stride length. Red region indicates where propagated trajectory no longer has three revolutions.\label{fig:t0_0.1}](hw3p4_1_MinSearch_t00.100.png){width=100%}
 
 ![](hw3p4_1_MinSearch_t00.050.png){width=80%}
 
 ![](hw3p4_1_MinSearch_t00.010.png){width=80%}
 
 ![](hw3p4_1_MinSearch_t00.005.png){width=80%}
+
+\vfill
+
+### MATLAB Live Script Code Listings
+
+(next page)
