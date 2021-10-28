@@ -9,7 +9,7 @@ lang: "en"
 titlepage: false
 header-left: "ASE387P"
 header-center: "Burton Yale"
-header-right: "2021-10-25"
+header-right: "2021-10-27"
 footer-left: "Homework 3"
 toc-own-page: true
 colorlinks: true
@@ -51,7 +51,7 @@ $$
 **Problem Statement** Visually, where is the global minimum?
 :::
 
-Looking specifically at the density of the countour lines, indicates a region around $[1,\, 1]$ being the minimum. 
+Looking specifically at the density of the contour lines, indicates a region around $[1,\, 1]$ being the minimum. 
 
 ### Part 1.3
 ::: box
@@ -80,7 +80,7 @@ $$
 \end{array}\right]\bigg\rvert_{\textbf{x}=[1, 1]^T} = \begin{bmatrix}0 \\ 0 \end{bmatrix} {\Large\checkmark}
 $$
 
-With the first order gradient having zeros in every index, the second order necessary condition is satisified. Taking the second gradient, using the first, yields a $2\times2$ matrix of second order parital derivatives:
+With the first order gradient having zeros in every index, the second order necessary condition is satisfied. Taking the second gradient, using the first, yields a $2\times2$ matrix of second order partial derivatives:
 
 $$
 \nabla^2 f(\textbf{x}) = \begin{bmatrix}
@@ -114,7 +114,7 @@ Seeing as the  Cholesky factorization was completed successfully, the second ord
 
 ![Stepping to solution space in green, then solving for minimum using both Quadratic Polynomial and Golden Ratio solvers.](hw3p2.png)
 
-![Slice of Rosenbrock function along $\textbf{s} = [-1,\, 1]$ showing targetted minimum and search points created by Golden Ratio solver.](hw3p2_2.png)
+![Slice of Rosenbrock function along $\textbf{s} = [-1,\, 1]$ showing targeted minimum and search points created by Golden Ratio solver.](hw3p2_2.png)
 
 ### Part 2.2
 ::: box
@@ -138,7 +138,7 @@ One key result from the table is the inverse relationship between the number of 
 ::: box
 **Problem Statement** Using the polynomial line search from [Part 2](#part-2.1), build wrapper routines for general n-dimensional unconstrained optimizers using:
 
-1) Seepest Descent
+1) Steepest Descent 
 2) Fletcher-Reeves
 3) Polak-Ribiere
 4) BFGS 
@@ -177,6 +177,63 @@ $$ f = e^{u^2} + \sin(4x_1 - 3x_2)^4 + 0.5(2x_1 + x_2 -10)^2 $$
 where
 $$u = \frac{1}{2}(x_1^2 + x_2^2 + 25)$$
 :::
+
+![Plot of surface for above function, note log scale on z-axiz](hw3p3_2full.png)
+
+\newpage
+
+#### Initial Condition: $x_0 = [-4,\, 1]^T$
+For this specific initial condition it was found that the linear methods (even for BFGS's hessian approximation), converged onto a local minimum, and not the global minimum of the function where $F_{min} = 1$. On the contrary, the second order Levenberg-Marquardt method was able to find a much closer value in fewer iterations and run time.
+
+| Algorithm | $F_{min}$ | Func Calls | Grad Calls | Hess Calls | Run Time (seconds) |
+| :---: | --- | --- | --- | --- | --- |
+| Steepest Descent | $1.18079703$ | $408$ | $11$ | $0$ | $0.110826$ |
+| Fletcher Reeves | $1.18084310$ | $40316$ | $1001$ | $0$ | $0.445786$ |
+| Polak Ribiere | $1.18079703$ | $1742$ | $47$ | $0$ | $0.060499$ |
+| BFGS | $1.18079703$ | $279$ | $8$ | $0$ | $0.030884$ |
+| Levenberg Marquardt | $1.0348054$ | $49$ | $24$ | $24$ | $0.039495$ |
+
+![Finding minimum of given function using **Steepest Descent**. Solution converges to local minimum. **Apologies for the plot coloring, my MATLAB has been crashing trying to plot these as of late**](hw3p3_2SD.png)
+
+![Finding minimum of given function using **Fletcher-Reeves** algorithm. Solution converges to local minimum.**Apologies for the plot coloring, my MATLAB has been crashing trying to plot these as of late**](hw3p3_2FR.png){width=65%}
+
+![Finding minimum of given function using **Polak-Ribiere** algorithm. Solution converges to local minimum.](hw3p3_2PR.png){width=65%}
+
+![Finding minimum of given function using **BFGS** algorithm. Solution converges to local minimum.](hw3p3_2BFGS.png){width=65%}
+
+![Finding minimum of given function using **Levenberg-Marquart** algorithm. Solution converges to local minimum.](hw3p3_2LM.png){width=65%}
+
+\newpage
+
+#### Initial Condition: $x_0 = [2,\, 3]^T$
+In the opposite case, the linear descent algorithms were able to, apart from the Fletcher-Reeves, quickly find the true minima within 30 iterations. While the second order method found a settling point not on the global minima, and attempts to perturb the resting state to evaluate if it was a saddle point did not change the result.
+
+| Algorithm | $F_{min}$ | Func Calls | Grad Calls | Hess Calls | Run Time (seconds) |
+| :---: | --- | --- | --- | --- | --- |
+| Steepest Descent | $1.00000000$ | $1130$ | $30$ | $0$ | $0.0.62096$ |
+| Fletcher Reeves | $1.00000254$ | $40474$ | $1001$ | $0$ | $0.283291$ |
+| Polak Ribiere | $1.00000000$ | $320$ | $9$ | $0$ | $0.035704$ |
+| BFGS | $1.00474597$ | $124$ | $4$ | $0$ | $0.031874$ |
+| Levenberg Marquardt | $2.0522366$ | $1001$ | $1001$ | $1001$ | $0.049011$ |
+
+![Finding minimum of given function using **Steepest Descent**. Solution converges to global minimum, although gets stuck in iteration loop.](hw3p3_3SD.png)
+
+![Finding minimum of given function using **Fletcher-Reeves** algorithm. Solution converges to global minimum.](hw3p3_3FR.png){width=65%}
+
+![Finding minimum of given function using **Polak-Ribiere** algorithm. Solution converges to global minimum.](hw3p3_3PR.png){width=65%}
+
+![Finding minimum of given function using **BFGS** algorithm. Solution converges to global minimum.](hw3p3_3BFGS.png){width=65%}
+
+![Finding minimum of given function using **Levenberg-Marquart** algorithm. Solution converges to local minimum.](hw3p3_3LM.png){width=65%}
+
+\newpage
+
+#### Discussion of Results
+For each initial condition the linear and second order methods had different behaviors and found different minima, while the behavior is strange, it can be explained looking at the plot of the function as a surface rather than as a contour. 
+
+![Isometric view of function minimized, note the ridged region closest to the front is where the global minima lies at $x = [3,\, 4]^T$.](hw3p3_2zoom2.png)
+
+The function proves difficult to minimize due to its steep slopes, very flat regions far from the global minimum (located in the other 3 corners from the solution), and global minimum surrounded by multiple different, isolated local minima. Depending the initial condition different minima are found, which is shown in the previous parts. 
 
 \newpage
 
@@ -246,7 +303,7 @@ $$
 
 #### Derivatives
 
-To calculate the derivatives of the performance index, the integration of the trajectory is passed through a complex step derivative function. This incurs 3 additional functions for each gradient computed when minizing. 
+To calculate the derivatives of the performance index, the integration of the trajectory is passed through a complex step derivative function. This incurs 3 additional functions for each gradient computed when minimizing. 
 
 #### Minimization Methods
 
@@ -292,6 +349,8 @@ $$
 ![Finding minimum using BFGS algorithm with initial stride optimized for quick convergence. Takes more iterations due to initial distance from minimum. Red region indicates where propagated trajectory no longer has three revolutions.](hw3p4_2_MinSearch.png){width=70%}
 
 ![Optimized trajectory propagated terminating at targeted final state.](hw3p4_2_Optimal.png){width=70%}
+
+\newpage
 
 ### Discussion of Results
 For both initial condition cases, the final state was correctly optimized to. In this case, the method of minimization was the BFGS algorithm. This choice was motivated by the fact that the derivatives of the cost function were found through complex step derivatives, which requires two propagation call for every gradient found. Also tested was variation of the initial stride length during the line search. Starting with the $t_0$ from the previous problems, $0.1$, Figure \ref{fig:t0_0.1} shows the path taken to find the minimum. This initial stride length was large enough to jump completely over the band of solutions where the number of revolutions, $N$, was $3$. From there, it proceeded to find the solution, taking a much longer than average route. The next figures in the appendix show the increasingly smaller values of the initial stride. 
